@@ -1,16 +1,23 @@
 package mod.dragonita.fantasymod.entities;
 
+import mod.dragonita.fantasymod.customthings.PacketHandler;
+import mod.dragonita.fantasymod.customthings.PanicMessage;
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.HorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class UnicornEntity extends HorseEntity{
 	//private static Logger LOGGER = Main.LOGGER;
@@ -30,14 +37,15 @@ public class UnicornEntity extends HorseEntity{
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(baseHealth * 1.5D);
 	}
 	
-	/*
+	/**
 	 * This Function return true if the running Goal was the same as in the parameters
 	 * 
 	 * @param The Class of the Goal we want to compare
 	 * @return true if it was the same, else false
 	 * @see The goals
 	 */
-	public boolean CompareGoal(Class<PanicGoal> TargetGoal) {
+	public boolean CompareGoal(Class<PanicGoal> TargetGoal, PlayerEntity player) {
+		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> player.chunk), PanicMessage::new);
 		return this.goalSelector.getRunningGoals().anyMatch(goal -> goal.getGoal().getClass() == TargetGoal);
 	}
 	

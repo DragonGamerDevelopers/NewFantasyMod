@@ -42,8 +42,8 @@ public final class Main
 	public static final String MODID = "fantasymod";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static final ResourceLocation DIMENSION_TYPE = new ResourceLocation(Main.MODID, "rainbow_dimension");
-	private static int ID = 505156459;
-	
+	private final static int ID = 505156459;
+
 	public Main()
 	{
         // Register the setup method for modloading
@@ -67,13 +67,11 @@ public final class Main
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
 		ModDimensions.DIMENSION.register(modEventBus);
-		
 		MinecraftForge.EVENT_BUS.register(this);
-	}
+	}	
 	
 	public void setup(final FMLCommonSetupEvent event) {
-		
-		PacketHandler.INSTANCE.registerMessage(ID++, PanicMessage.class, PanicMessage::encode, PanicMessage::new, PanicMessage::handle);
+		PacketHandler.INSTANCE.registerMessage(ID, PanicMessage.class, PanicMessage::encode, PanicMessage::new, PanicMessage::handle);
 		DeferredWorkQueue.runLater(new Runnable() {
 			@Override
 			public void run() {

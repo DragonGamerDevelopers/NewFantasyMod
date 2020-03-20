@@ -25,8 +25,7 @@ public class PanicMessage{
 		PanicMessage.data = data;
 	}
 	
-	public static <MSG> void handle(MSG msg, Supplier<NetworkEvent.Context> context) {
-		PanicMessage message;
+	public static <MSG> void handle(PanicMessage message, Supplier<NetworkEvent.Context> context) {
 		context.get().enqueueWork(() ->  {
 			@SuppressWarnings("unused")
 			ServerPlayerEntity sender = context.get().getSender();
