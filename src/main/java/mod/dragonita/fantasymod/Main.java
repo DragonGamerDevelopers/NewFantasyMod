@@ -39,10 +39,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod(Main.MODID)
 public final class Main
 {
+	//505156459
 	public static final String MODID = "fantasymod";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static final ResourceLocation DIMENSION_TYPE = new ResourceLocation(Main.MODID, "rainbow_dimension");
-	private final static int ID = 505156459;
+	static int ID;
 
 	public Main()
 	{
@@ -71,7 +72,7 @@ public final class Main
 	}	
 	
 	public void setup(final FMLCommonSetupEvent event) {
-		PacketHandler.INSTANCE.registerMessage(ID, PanicMessage.class, PanicMessage::encode, PanicMessage::new, PanicMessage::handle);
+		PacketHandler.INSTANCE.registerMessage(ID++, PanicMessage.class, PanicMessage::encode, PanicMessage::new, PanicMessage::handle);
 		DeferredWorkQueue.runLater(new Runnable() {
 			@Override
 			public void run() {

@@ -1,5 +1,8 @@
 package mod.dragonita.fantasymod.entities;
 
+import org.apache.logging.log4j.Logger;
+
+import mod.dragonita.fantasymod.Main;
 import mod.dragonita.fantasymod.customthings.PacketHandler;
 import mod.dragonita.fantasymod.customthings.PanicMessage;
 import net.minecraft.entity.AgeableEntity;
@@ -20,7 +23,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class UnicornEntity extends HorseEntity{
-	//private static Logger LOGGER = Main.LOGGER;
+	private static Logger LOGGER = Main.LOGGER;
 	
 	public UnicornEntity(final EntityType<? extends UnicornEntity> entityType, final World world) {
 		super(entityType, world);
@@ -45,7 +48,8 @@ public class UnicornEntity extends HorseEntity{
 	 * @see The goals
 	 */
 	public boolean CompareGoal(Class<PanicGoal> TargetGoal, PlayerEntity player) {
-		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> player.chunk), PanicMessage::new);
+		PacketHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(()->player), PanicMessage.class);
+		LOGGER.info("The ReturnValue will be: " + this.goalSelector.getRunningGoals().anyMatch(goal -> goal.getGoal().getClass() == TargetGoal));
 		return this.goalSelector.getRunningGoals().anyMatch(goal -> goal.getGoal().getClass() == TargetGoal);
 	}
 	
