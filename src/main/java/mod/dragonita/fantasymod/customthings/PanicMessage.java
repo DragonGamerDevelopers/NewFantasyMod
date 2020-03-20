@@ -2,18 +2,9 @@ package mod.dragonita.fantasymod.customthings;
 
 import java.util.function.Supplier;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import io.netty.buffer.Unpooled;
-import net.minecraft.entity.ai.brain.task.PanicTask;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkInstance;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.IndexedMessageCodec;
 
 public class PanicMessage{
 	private static int data;
