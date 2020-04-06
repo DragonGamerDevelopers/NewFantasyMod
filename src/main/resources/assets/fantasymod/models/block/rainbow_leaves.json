@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "fantasymod:block/infuser"
+		"all": "fantasymod:block/rainbow_leaves"
 	}
 }

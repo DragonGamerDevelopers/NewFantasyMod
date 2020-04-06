@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import mod.dragonita.fantasymod.entities.UnicornEntity;
 import mod.dragonita.fantasymod.util.PCEntityModel;
 import mod.dragonita.fantasymod.util.PCRenderModel;
-import net.minecraft.entity.ai.goal.PanicGoal;
 
 /**
  * ModelUnicornTabula - DragonITA
@@ -19,8 +18,6 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
     public PCRenderModel BackRightLeg1;
     public PCRenderModel FrontRightLeg1;
     public PCRenderModel FrontLeftLeg1;
-    public PCRenderModel LeftChest;
-    public PCRenderModel RightChest;
     public PCRenderModel Tail1;
     public PCRenderModel Head;
     public PCRenderModel RightEar1;
@@ -110,10 +107,6 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
         this.Head = new PCRenderModel(this, 0, 0);
         this.Head.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.Head.addBox(-2.5F, -10.0F, -1.5F, 5, 5, 7, 0.0F);
-        this.LeftChest = new PCRenderModel(this, 0, 47);
-        this.LeftChest.setRotationPoint(8.0F, -8.0F, -1.0F);
-        this.LeftChest.addBox(-3.0F, 0.0F, 0.0F, 8, 8, 3, 0.0F);
-        this.setRotateAngle(LeftChest, 0.0F, -1.5707963267948966F, 0.0F);
         this.LeftSaddlePart = new PCRenderModel(this, 75, 0);
         this.LeftSaddlePart.setRotationPoint(5.0F, 3.0F, 2.0F);
         this.LeftSaddlePart.addBox(-0.5F, 6.0F, -1.0F, 1, 2, 2, 0.0F);
@@ -150,10 +143,6 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
         this.FrontLeftLeg2 = new PCRenderModel(this, 44, 41);
         this.FrontLeftLeg2.setRotationPoint(0.0F, 7.0F, 0.0F);
         this.FrontLeftLeg2.addBox(-1.9F, 0.0F, -1.6F, 3, 5, 3, 0.0F);
-        this.RightChest = new PCRenderModel(this, 0, 34);
-        this.RightChest.setRotationPoint(-8.0F, -8.0F, 1.0F);
-        this.RightChest.addBox(-3.0F, 0.0F, 0.0F, 8, 8, 3, 0.0F);
-        this.setRotateAngle(RightChest, -0.0F, 1.5707963267948966F, 0.0F);
         this.Body = new PCRenderModel(this, 0, 34);
         this.Body.setRotationPoint(0.0F, 11.0F, 9.0F);
         this.Body.addBox(-5.0F, -8.0F, -19.0F, 10, 10, 24, 0.0F);
@@ -207,7 +196,6 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
         this.Body.addChild(this.Tail1);
         this.Body.addChild(this.RightSaddleMouthButton);
         this.Neck.addChild(this.Head);
-        this.Body.addChild(this.LeftChest);
         this.Head.addChild(this.RightEar1);
         this.UpperMouth.addChild(this.Corn1);
         this.Body.addChild(this.RightMouthSaddleLine);
@@ -216,7 +204,6 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
         this.FrontLeftLeg2.addChild(this.FrontLeftLeg3);
         this.Tail2.addChild(this.Tail3);
         this.FrontLeftLeg1.addChild(this.FrontLeftLeg2);
-        this.Body.addChild(this.RightChest);
         this.Body.addChild(this.FrontLeftLeg1);
         this.Body.addChild(this.Neck);
         this.Body.addChild(this.CenterSaddle);
@@ -227,7 +214,7 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
         this.RightEar1.addChild(this.RightEar2);
         this.Head.addChild(this.LeftEar1);
         this.BackRightLeg1.addChild(this.BackRightLeg2);
-        bodyParts = new PCRenderModel[] {Body, NeckHair, BackLeftLeg1, BackRightLeg1, FrontRightLeg1, FrontLeftLeg1, LeftChest, RightChest, Tail1, Head, RightEar1, LeftEar1, Neck, LeftMouthSaddleLine, RightMouthSaddleLine, CenterSaddle, RightSaddleMouthButton, LeftSaddleMouthButton, BackLeftLeg2, BackLeftLeg3, BackRightLeg2, BackRightLeg3, FrontRightLeg2, FrontRightLeg3, FrontLeftLeg2, FrontLeftLeg3, Tail2, Tail3, UpperMouth, UnderMouth, Corn1, Corn2, Corn3, RightEar2, LeftEar2, BackUpperSaddlePart, FrontUpperSaddlePart, LeftSaddleLine, RightSaddleLine, LeftSaddlePart, RightSaddlePart};
+        bodyParts = new PCRenderModel[] {Body, NeckHair, BackLeftLeg1, BackRightLeg1, FrontRightLeg1, FrontLeftLeg1, Tail1, Head, RightEar1, LeftEar1, Neck, LeftMouthSaddleLine, RightMouthSaddleLine, CenterSaddle, RightSaddleMouthButton, LeftSaddleMouthButton, BackLeftLeg2, BackLeftLeg3, BackRightLeg2, BackRightLeg3, FrontRightLeg2, FrontRightLeg3, FrontLeftLeg2, FrontLeftLeg3, Tail2, Tail3, UpperMouth, UnderMouth, Corn1, Corn2, Corn3, RightEar2, LeftEar2, BackUpperSaddlePart, FrontUpperSaddlePart, LeftSaddleLine, RightSaddleLine, LeftSaddlePart, RightSaddlePart};
         saveAsDefaultPose();
     }
 
@@ -253,121 +240,76 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
     }
     
     @Override
-    public void setRotationAngles(UnicornEntity entity, float limbSwing, float limbSwingAmount, float ageInTick, float netHeadYaw, float headPitch) {
+    public void setLivingAnimations(T entity, float limbSwing, float limbSwingAmount, float partialTick) {
+    	super.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTick);
+		
     	limbSwing = entity.ticksExisted;
 		limbSwingAmount = 1;
-		/*
-		PanicGoal panicGoal = null;
-		panicGoal.
-		*/
+		
+		loadDefaultPose();
+
+		@SuppressWarnings("unused")
 		float globalHeight = 1;
+		@SuppressWarnings("unused")
 		float globalSpeed = 1;
 		float globalDegree = 1;
-
-		this.Neck.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 2;
-		this.Head.rotateAngleZ = (netHeadYaw*((float)Math.PI / 180)) / 4;
-		this.Head.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 4;
-		/*
-    	if(entity.isHorseSaddled()) {
-    		this.BackUpperSaddlePart.showModel = false;
-    		this.CenterSaddle.showModel = false;
-    		this.FrontUpperSaddlePart.showModel = false;
-    		this.LeftMouthSaddleLine.showModel = false;
-    		this.LeftSaddleLine.showModel = false;
-    		this.LeftSaddleMouthButton.showModel = false;
-    		this.LeftSaddlePart.showModel = false;
-    		this.RightMouthSaddleLine.showModel = false;
-    		this.RightSaddleLine.showModel = false;
-    		this.RightSaddleMouthButton.showModel = false;
-    		this.RightSaddlePart.showModel = false;
-    	}
-		*/
-    	/*if(entity.prevPosX != entity.getPosX() && entity.goalSelector.getRunningGoals().findFirst().get().toString() == "PanicGoal" || entity.prevPosY != entity.getPosY() && entity.goalSelector.getRunningGoals().findFirst().get().toString() == "PanicGoal" || entity.prevPosZ != entity.getPosZ() && entity.goalSelector.getRunningGoals().findFirst().get().toString() == "PanicGoal") {
-    		loadDefaultPose();
-    		//entity.goalSelector.getRunningGoals().findFirst().get();
-    		//Body
-    		bounce(Body, 0.5F*globalSpeed, 3.5F*globalHeight, false, limbSwing, limbSwingAmount);
-
-    		//BackLeftLeg
-    		swing(BackLeftLeg1, 0.1F, 0.75F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-    		swing(BackLeftLeg2, 0.1F, 0.75F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
     	
-    		//BackRightLeg
-       		swing(BackRightLeg1, 0.1F, 0.75F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-    		swing(BackRightLeg2, 0.1F, 0.75F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-    		
-    		//FrontLeftLeg
-    		swing(FrontLeftLeg1, 0.1F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-    		swing(FrontLeftLeg2, 0.1F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-    	
-    		//FrontRightLeg
-       		swing(FrontRightLeg1, 0.1F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-    		swing(FrontRightLeg2, 0.1F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-    		
-    }else */if(entity.prevPosX != entity.getPosX() || entity.prevPosY != entity.getPosY() || entity.prevPosZ != entity.getPosZ()){
-				if(entity.CompareGoal(PanicGoal.class, null)) {
-	    			loadDefaultPose();
-					
-		    		//Body
-		    		bounce(Body, 0.75F*globalSpeed, 3*globalHeight, false, limbSwing, limbSwingAmount);
-		
-		    		//BackLeftLeg
-		    		swing(BackLeftLeg1, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		swing(BackLeftLeg2, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		    	
-		    		//BackRightLeg
-		    		swing(BackRightLeg1, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		swing(BackRightLeg2, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		    		
-		    		//FrontLeftLeg
-		    		swing(FrontLeftLeg1, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		swing(FrontLeftLeg2, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		    	
-		    		//FrontRightLeg
-		    		swing(FrontRightLeg1, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		swing(FrontRightLeg2, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-		    		  
-	    		}else{
-	    	    		
-	    	    	loadDefaultPose();
-	    	    		
-	    	       	//Body
-	    	    	bounce(Body, -0.2F*globalSpeed, -0.2F*globalHeight, false, limbSwing, limbSwingAmount);
+		if(entity.prevPosX != entity.getPosX() || entity.prevPosY != entity.getPosY() || entity.prevPosZ != entity.getPosZ()){
+    		if(entity.getDataManager().get(UnicornEntity.PANIC) || entity.hasAttacker == true) {
+    			//Body 0.00000000009F
+    			bounce(Body, 0.5F, 4000000F, true, limbSwing, limbSwingAmount);
+    			
+    			//BackLeftLeg
+    			swing(BackLeftLeg1, 2500F, -0.45F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    			swing(BackLeftLeg2, 2500F, -0.45F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    				    	
+    			//BackRightLeg
+    			swing(BackRightLeg1, 250, -0.45F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    			swing(BackRightLeg2, 250, -0.45F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    				    		
+    			//FrontLeftLeg
+    			swing(FrontLeftLeg1, 250, 0.5F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    			swing(FrontLeftLeg2, 250, 0.5F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    						
+    			//FrontRightLeg
+    			swing(FrontRightLeg1, 250, 0.5F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    			swing(FrontRightLeg2, 250, 0.5F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
+    			
+	    	}else{
+	    		/*
+	    	    //Body
+	    	    bounce(Body, -0.2F*globalSpeed, -0.2F*globalHeight, false, limbSwing, limbSwingAmount);
 	    	       		
-	    	   		//BackLeftLeg
-	    	   		bounce(BackLeftLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
+	    	   	//BackLeftLeg
+	    	   	bounce(BackLeftLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
 	    	    	
-	    	   		//BackRightLeg
-	    	   		bounce(BackRightLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
+	    	   	//BackRightLeg
+	    	   	bounce(BackRightLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
 	    	    		
-	        		//FrontLeftLeg
-	   	    		bounce(FrontLeftLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
-	    	    	
-	    	    	//FrontRightLeg
-	    	    	bounce(FrontRightLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
-	    	    		/*
-	    	    		loadDefaultPose();
-	    	    		//entity.goalSelector.getRunningGoals().findFirst().get();
-	    	    		//Body
-	    	    		bounce(Body, 0.75F*globalSpeed, 3*globalHeight, false, limbSwing, limbSwingAmount);
-	
-	    	    		//BackLeftLeg
-	    	    		swing(BackLeftLeg1, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    		swing(BackLeftLeg2, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    	
-	    	    		//BackRightLeg
-	    	       		swing(BackRightLeg1, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    		swing(BackRightLeg2, 0.5F, 0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    		
-	    	    		//FrontLeftLeg
-	    	    		swing(FrontLeftLeg1, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    		swing(FrontLeftLeg2, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    	
-	    	    		//FrontRightLeg
-	    	       		swing(FrontRightLeg1, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    		swing(FrontRightLeg2, 0.5F, -0.5F*globalDegree, true, 0.4F, 0.0F, limbSwing, limbSwingAmount);
-	    	    		*/
+	        	//FrontLeftLeg
+	   	    	bounce(FrontLeftLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
+	    	    
+	    	    //FrontRightLeg
+	    	    bounce(FrontRightLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
+	    		*/
 	    	}             
 	    }
+    }
+    
+    @Override
+    public void setRotationAngles(UnicornEntity entity, float limbSwing, float limbSwingAmount, float ageInTick, float netHeadYaw, float headPitch) {
+
+		this.Neck.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 2;
+		//this.Head.rotateAngleZ = (netHeadYaw*((float)Math.PI / 180)) / 4;
+		//this.Head.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 4;
+        		
+		boolean flag = entity.isHorseSaddled();
+        this.LeftSaddleLine.showModel = flag;
+        this.RightSaddlePart.showModel = flag ;
+        this.LeftSaddlePart.showModel = flag;
+        this.FrontUpperSaddlePart.showModel = flag;
+        this.BackUpperSaddlePart.showModel = flag;
+        this.RightSaddleLine.showModel = flag;
+								
 	}
 }

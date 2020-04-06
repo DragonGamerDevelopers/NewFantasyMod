@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "fantasymod:block/rainbow_log" },
+        "axis=z":   { "model": "fantasymod:block/rainbow_log", "x": 90 },
+        "axis=x":   { "model": "fantasymod:block/rainbow_log", "x": 90, "y": 90 }
+    }
+}

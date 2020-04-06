@@ -4,11 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import mod.dragonita.fantasymod.customthings.UnicornSpawnEgg;
+import mod.dragonita.fantasymod.init.ModBiomes;
 import mod.dragonita.fantasymod.init.ModBlocks;
 import mod.dragonita.fantasymod.init.ModItemGroups;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,7 +50,12 @@ public final class ModEventSubscriber {
 				});
 		LOGGER.debug("Registered BlockItems");
 	}
-
+	
+	@SubscribeEvent
+	public static void onRegisterBiomes(final RegistryEvent.Register<Biome> event) {
+		ModBiomes.registerBiomes();
+	}
+	
 	/**
 	 * Exists to work around a limitation with Spawn Eggs:
 	 * Spawn Eggs require an EntityType, but EntityTypes are created AFTER Items.

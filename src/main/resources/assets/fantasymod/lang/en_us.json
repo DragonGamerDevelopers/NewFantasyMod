@@ -26,7 +26,14 @@
 	
 	"block.fantasymod.rainbow_ore": "Rainbow Ore",
 	"block.fantasymod.rainbow_block": "Rainbow Block",
-	"block.fantasymod.infuser": "Infuser",
+	"block.fantasymod.rainbow_chest": "Rainbow Chest",
+	"block.fantasymod.rainbow_planks": "Rainbow Planks",
+	"block.fantasymod.rainbow_log": "Rainbow Log",
+	"block.fantasymod.rainbow_leaves": "Rainbow Leaves",
 	
-	"entity.fantasymod.unicorn_entity": "Unicorn"
+	"block.fantasymod.rainbow_sapling": "Rainbow Sapling",
+	
+	"entity.fantasymod.unicorn_entity": "Unicorn",
+	
+	"container.rainbow_chest": "Rainbow Chest"
 }

@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "fantasymod:block/rainbow_planks"
+	}
+}

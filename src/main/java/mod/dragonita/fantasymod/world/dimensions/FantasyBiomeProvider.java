@@ -5,8 +5,8 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
+import mod.dragonita.fantasymod.init.ModBiomes;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.provider.BiomeProvider;
 
 public class FantasyBiomeProvider extends BiomeProvider {
@@ -19,10 +19,10 @@ public class FantasyBiomeProvider extends BiomeProvider {
 		rand = new Random();
 	}
 	
-	private static final Set<Biome> biomeList = ImmutableSet.of(Biomes.PLAINS);
+	private static final Set<Biome> biomeList = ImmutableSet.of(ModBiomes.RAINBOW_FOREST.get());
 
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z) {
-		return Biomes.PLAINS;
+		return ModBiomes.RAINBOW_FOREST.get();
 	}
 }

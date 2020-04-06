@@ -6,8 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import mod.dragonita.fantasymod.customthings.PacketHandler;
-import mod.dragonita.fantasymod.customthings.PanicMessage;
+import mod.dragonita.fantasymod.init.ModBiomes;
 import mod.dragonita.fantasymod.init.ModBlocks;
+import mod.dragonita.fantasymod.init.ModContainerTypes;
 import mod.dragonita.fantasymod.init.ModDimensions;
 import mod.dragonita.fantasymod.init.ModEntityTypes;
 import mod.dragonita.fantasymod.init.ModItems;
@@ -39,11 +40,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod(Main.MODID)
 public final class Main
 {
-	//505156459
 	public static final String MODID = "fantasymod";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static final ResourceLocation DIMENSION_TYPE = new ResourceLocation(Main.MODID, "rainbow_dimension");
-	static int ID;
 
 	public Main()
 	{
@@ -68,22 +67,24 @@ public final class Main
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
 		ModDimensions.DIMENSION.register(modEventBus);
+		ModBiomes.BIOMES.register(modEventBus);
+		ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
 		MinecraftForge.EVENT_BUS.register(this);
 	}	
 	
 	public void setup(final FMLCommonSetupEvent event) {
-		PacketHandler.INSTANCE.registerMessage(ID++, PanicMessage.class, PanicMessage::encode, PanicMessage::new, PanicMessage::handle);
+		PacketHandler.init();
 		DeferredWorkQueue.runLater(new Runnable() {
 			@Override
 			public void run() {
 				for(Biome biome : ForgeRegistries.BIOMES) {
-					//if(biome == Biomes.PLAINS) {
+					if(biome == ModBiomes.RAINBOW_FOREST.get()) {
 						ConfiguredPlacement<CountRangeConfig> customConfig = Placement.COUNT_RANGE
 								.configure(new CountRangeConfig(20, 5, 5, 25));
 						biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
 								.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.RAINBOW_ORE.get().getDefaultState(), 10))
 								.withPlacement(customConfig));
-					//}
+						}
 					}
 				}
 		});	

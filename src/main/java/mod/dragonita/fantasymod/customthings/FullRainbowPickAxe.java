@@ -2,14 +2,23 @@ package mod.dragonita.fantasymod.customthings;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import org.apache.logging.log4j.Logger;
+
+import mod.dragonita.fantasymod.Main;
 import mod.dragonita.fantasymod.util.KeyboardHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -17,11 +26,13 @@ import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 
 public class FullRainbowPickAxe extends PickaxeItem {
-
+	@SuppressWarnings("unused")
+	private Logger LOGGER = Main.LOGGER;
 	public FullRainbowPickAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
 		super(tier, attackDamageIn, attackSpeedIn, builder);
 	}
 	
+	@SuppressWarnings("unused")
 	private BlockPos getBlockPos(BlockPos BlockP, double dx, double dy, double dz) {
 		BlockPos TargetBlock = BlockP.add(dx, dy, dz);
 		return TargetBlock;
@@ -51,37 +62,44 @@ public class FullRainbowPickAxe extends PickaxeItem {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
-	//onBlock
 	
 	@SuppressWarnings("unused")
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos,
 			LivingEntity entityLiving) {
-		BlockPos MiddleBlock = getBlockPos(pos, 0, 0, 0);
-		BlockPos MiddleLeftBlock = getBlockPos(pos, 0, -1, 0);
-		BlockPos MiddleRightBlock = getBlockPos(pos, 0, 1, 0);
-		BlockPos MiddleUpperLeftBlock = getBlockPos(pos, 0, -1, 1);
-		BlockPos MiddleDownLeftBlock = getBlockPos(pos, 0, -1, -1);
-		BlockPos MiddleUpperRightBlock = getBlockPos(pos, 0, -1, 1);
-		BlockPos MiddleDownRightBlock = getBlockPos(pos, 0, -1, -1);
-		BlockPos UpperMiddleBlock = getBlockPos(pos, 0, 0, 1);
-		BlockPos DownMiddleBlock = getBlockPos(pos, 0, 0, -1);
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
 		
-		ServerPlayerEntity ServerPlayer;
-		//entityLiving.Player
-		
-		/*
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, MiddleBlock)), worldIn, getBlockState(worldIn, MiddleBlock), MiddleBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, MiddleLeftBlock)), worldIn, getBlockState(worldIn, MiddleLeftBlock), MiddleLeftBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, MiddleRightBlock)), worldIn, getBlockState(worldIn, MiddleRightBlock), MiddleRightBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, MiddleUpperLeftBlock)), worldIn, getBlockState(worldIn, MiddleUpperLeftBlock), MiddleUpperLeftBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, MiddleDownLeftBlock)), worldIn, getBlockState(worldIn, MiddleDownLeftBlock), MiddleDownLeftBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, MiddleUpperRightBlock)), worldIn, getBlockState(worldIn, MiddleUpperRightBlock), MiddleUpperRightBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, MiddleDownRightBlock)), worldIn, getBlockState(worldIn, MiddleDownRightBlock), MiddleDownRightBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, UpperMiddleBlock)), worldIn, getBlockState(worldIn, UpperMiddleBlock), UpperMiddleBlock, entityLiving);
-		super.onBlockDestroyed(getItemStack(getBlockState(worldIn, DownMiddleBlock)), worldIn, getBlockState(worldIn, DownMiddleBlock), DownMiddleBlock, entityLiving);
-		*/
-		//tryHarvestBlockCustom(pos, worldIn, ServerPlayer);
+		boolean dropBlock = state.hasTileEntity();
+		for (int lx = 0; lx < 3; lx++) {
+			for (int lz = 0; lz < 3; lz++) {
+				BlockPos posToBreak = new BlockPos(x + lx, y, z + lz);
+				destroyBlock(posToBreak, true, entityLiving);
+			}
+		}
+		//tryHarvestBlockCustom(pos, worldIn, (ServerPlayerEntity)null);
 		return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+	}
+	
+	@SuppressWarnings("unused")
+	private BlockState getBlockState(World worldIn, BlockPos pos) {
+		return worldIn.getBlockState(pos);
+	}
+
+	private boolean destroyBlock(BlockPos pos, boolean dropBlock, @Nullable Entity entity) {
+		World world = entity.world;
+		BlockState blockstate = world.getBlockState(pos);
+		if (blockstate.isAir(entity.world, pos))
+			return false;
+		else {
+			IFluidState ifluidstate = world.getFluidState(pos);
+			world.playEvent(2001, pos, Block.getStateId(blockstate));
+			if (dropBlock) {
+				TileEntity tileentity = blockstate.hasTileEntity() ? world.getTileEntity(pos) : null;
+				Block.spawnDrops(blockstate, world, world.getTileEntity(pos).getPos().add(0, 1.5, 0), tileentity, entity, ItemStack.EMPTY);
+			}
+			return world.setBlockState(pos, ifluidstate.getBlockState(), 3);
+		}
 	}
 }
