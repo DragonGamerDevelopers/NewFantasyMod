@@ -23,16 +23,16 @@ public class ModBiomes {
 					.temperature(0.7F)
 			.waterColor(16724639).waterFogColor(16762304)
 			.surfaceBuilder(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(
-					Blocks.DIRT.getDefaultState(), 
+					Blocks.GRASS_BLOCK.getDefaultState(), 
 					Blocks.STONE.getDefaultState(), 
-					Blocks.BIRCH_PLANKS.getDefaultState()))
+					Blocks.DIRT.getDefaultState()))
 			.category(Category.FOREST)
 			.downfall(0.8F)
-			.depth(0.1F)
+			.depth(0.1F)	
 			.parent(null)));
 	
 	public static void registerBiomes() {
-		registerBiome(RAINBOW_FOREST.get(), Type.FOREST, Type.HILLS);
+		registerBiome(RAINBOW_FOREST.get(), Type.FOREST);
 	}
 	
 	private static void registerBiome(Biome biome, Type... types) {

@@ -15,7 +15,7 @@ public class RainbowTree extends Tree{
 	public static final TreeFeatureConfig RAINBOW_TREE_CONFIG = (new TreeFeatureConfig.Builder(
 			new SimpleBlockStateProvider(ModBlocks.RAINBOW_LOG.get().getDefaultState()), 
 			new SimpleBlockStateProvider(ModBlocks.RAINBOW_LEAVES.get().getDefaultState()), 
-			new BlobFoliagePlacer(3, 0))).baseHeight(14).heightRandA(5).foliageHeight(9).ignoreVines()
+			new BlobFoliagePlacer(3, 0))).baseHeight(8).heightRandA(5).foliageHeight(6).ignoreVines()
 				.setSapling((IPlantable)ModBlocks.RAINBOW_SAPLING.get()).build();
 
 	@Override

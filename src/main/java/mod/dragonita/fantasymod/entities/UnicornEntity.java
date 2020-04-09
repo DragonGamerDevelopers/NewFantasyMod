@@ -1,5 +1,8 @@
 package mod.dragonita.fantasymod.entities;
 
+import org.apache.logging.log4j.Logger;
+
+import mod.dragonita.fantasymod.Main;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -16,9 +19,9 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class UnicornEntity extends HorseEntity{
-	//private static Logger LOGGER = Main.LOGGER;
+	@SuppressWarnings("unused")
+	private static Logger LOGGER = Main.LOGGER;
 	public static DataParameter<Boolean> PANIC = EntityDataManager.createKey(UnicornEntity.class, DataSerializers.BOOLEAN);
-	public boolean hasAttacker;
 	public UnicornEntity(final EntityType<? extends UnicornEntity> entityType, final World world) {
 		super(entityType, world);
 		dataManager.register(PANIC, false);
@@ -45,10 +48,6 @@ public class UnicornEntity extends HorseEntity{
 	public boolean isPanic() {
 		//LOGGER.info("The AttackingEntity will be: " + this.getAttackingEntity());
 		return this.goalSelector.getRunningGoals().anyMatch(goal -> goal.getGoal().getClass() == PanicGoal.class);
-	}
-	
-	public boolean hasAttackerFunc() {
-		return this.getAttackingEntity() != null ? true : false;
 	}
 	
 	/**
@@ -80,22 +79,16 @@ public class UnicornEntity extends HorseEntity{
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
-	
+
 	@Override
-	public void tick() {
-		super.tick();
+	public void livingTick() {
+		super.livingTick();
 		if(!world.isRemote) {
-			if(hasAttackerFunc()) {
-				this.hasAttacker = true;
-			}else {
-				this.hasAttacker = false;
-			}
-			
-			if(isPanic() && !dataManager.get(PANIC)) {
-				dataManager.set(PANIC, true);
-			}else {
-				dataManager.set(PANIC, false);
-			}
+				if(isPanic() && !dataManager.get(PANIC)) {
+					dataManager.set(PANIC, true);
+				}else if(!isPanic() && dataManager.get(PANIC)) {
+					dataManager.set(PANIC, false);
+				}
 		}
 	}
 }

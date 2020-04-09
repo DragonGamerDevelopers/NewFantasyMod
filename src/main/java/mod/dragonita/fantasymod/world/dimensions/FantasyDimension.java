@@ -75,6 +75,6 @@ public class FantasyDimension extends Dimension {
 	
 	@Override
 	public int getActualHeight() {
-		return 100;
+		return 10;
 	}
 }

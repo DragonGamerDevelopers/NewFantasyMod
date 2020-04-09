@@ -242,22 +242,37 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
     @Override
     public void setLivingAnimations(T entity, float limbSwing, float limbSwingAmount, float partialTick) {
     	super.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTick);
+    }
+    
+    @Override
+    public void setRotationAngles(UnicornEntity entity, float limbSwing, float limbSwingAmount, float ageInTick, float netHeadYaw, float headPitch) {
+
+		this.Neck.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 2;
+		//this.Head.rotateAngleZ = (netHeadYaw*((float)Math.PI / 180)) / 4;
+		//this.Head.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 4;
+        		
+		boolean flag = entity.isHorseSaddled();
+        this.LeftSaddleLine.showModel = flag;
+        this.RightSaddlePart.showModel = flag ;
+        this.LeftSaddlePart.showModel = flag;
+        this.FrontUpperSaddlePart.showModel = flag;
+        this.BackUpperSaddlePart.showModel = flag;
+        this.RightSaddleLine.showModel = flag;
+		
 		
     	limbSwing = entity.ticksExisted;
 		limbSwingAmount = 1;
 		
 		loadDefaultPose();
 
-		@SuppressWarnings("unused")
 		float globalHeight = 1;
-		@SuppressWarnings("unused")
 		float globalSpeed = 1;
 		float globalDegree = 1;
     	
 		if(entity.prevPosX != entity.getPosX() || entity.prevPosY != entity.getPosY() || entity.prevPosZ != entity.getPosZ()){
-    		if(entity.getDataManager().get(UnicornEntity.PANIC) || entity.hasAttacker == true) {
+    		if(entity.getDataManager().get(UnicornEntity.PANIC)) {
     			//Body 0.00000000009F
-    			bounce(Body, 0.5F, 4000000F, true, limbSwing, limbSwingAmount);
+    			bounce(Body, 0.5F, 0.000000009F, true, limbSwing, limbSwingAmount);
     			
     			//BackLeftLeg
     			swing(BackLeftLeg1, 2500F, -0.45F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
@@ -276,40 +291,22 @@ public class ModelUnicorn<T extends UnicornEntity> extends PCEntityModel<T> {
     			swing(FrontRightLeg2, 250, 0.5F*globalDegree, false, 0.4F, 0F, limbSwing, limbSwingAmount);
     			
 	    	}else{
-	    		/*
+	    		
 	    	    //Body
 	    	    bounce(Body, -0.2F*globalSpeed, -0.2F*globalHeight, false, limbSwing, limbSwingAmount);
-	    	       		
+	    	    
 	    	   	//BackLeftLeg
 	    	   	bounce(BackLeftLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
-	    	    	
+	    	    
 	    	   	//BackRightLeg
 	    	   	bounce(BackRightLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
-	    	    		
+	    	    
 	        	//FrontLeftLeg
 	   	    	bounce(FrontLeftLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
 	    	    
 	    	    //FrontRightLeg
 	    	    bounce(FrontRightLeg1, -0.2F*globalSpeed, 0.2F*globalHeight, false, limbSwing, limbSwingAmount);
-	    		*/
 	    	}             
 	    }
-    }
-    
-    @Override
-    public void setRotationAngles(UnicornEntity entity, float limbSwing, float limbSwingAmount, float ageInTick, float netHeadYaw, float headPitch) {
-
-		this.Neck.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 2;
-		//this.Head.rotateAngleZ = (netHeadYaw*((float)Math.PI / 180)) / 4;
-		//this.Head.rotateAngleY = (netHeadYaw*((float)Math.PI / 180)) / 4;
-        		
-		boolean flag = entity.isHorseSaddled();
-        this.LeftSaddleLine.showModel = flag;
-        this.RightSaddlePart.showModel = flag ;
-        this.LeftSaddlePart.showModel = flag;
-        this.FrontUpperSaddlePart.showModel = flag;
-        this.BackUpperSaddlePart.showModel = flag;
-        this.RightSaddleLine.showModel = flag;
-								
 	}
 }
