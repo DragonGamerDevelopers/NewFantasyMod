@@ -27,6 +27,7 @@ public class RainbowForest extends Biome {
 	      DefaultBiomeFeatures.addDoubleFlowers(this);
 	      DefaultBiomeFeatures.addStoneVariants(this);
 	      DefaultBiomeFeatures.addOres(this);
+	      //DefaultBiomeFeatures.addOakTreesFlowersGrass(this);
 	      DefaultBiomeFeatures.addExtraEmeraldOre(this);
 	      DefaultBiomeFeatures.addSedimentDisks(this);
 	      DefaultBiomeFeatures.addDefaultFlowers(this);
@@ -34,8 +35,7 @@ public class RainbowForest extends Biome {
 	      DefaultBiomeFeatures.addReedsAndPumpkins(this);
 	      DefaultBiomeFeatures.addSprings(this);
 	      DefaultBiomeFeatures.addFreezeTopLayer(this);
-	      this.getGrassColor(15728882, 15728882);
-	      this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(RainbowTree.RAINBOW_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(10, 10.0F, 10))));
+	      this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(RainbowTree.RAINBOW_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(2, 10.0F, 10))));
 	      this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.SHEEP, 12, 4, 4));
 	      this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.PIG, 10, 4, 4));
 	      this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.CHICKEN, 10, 4, 4));
@@ -50,5 +50,9 @@ public class RainbowForest extends Biome {
 	      this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.SLIME, 100, 4, 4));
 	      this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.ENDERMAN, 10, 1, 4));
 	      this.addSpawn(EntityClassification.MONSTER, new Biome.SpawnListEntry(EntityType.WITCH, 5, 1, 1));
+	}
+	@Override
+	public int getGrassColor(double p_225528_1_, double p_225528_3_) {
+		return 10682610;
 	}
 }

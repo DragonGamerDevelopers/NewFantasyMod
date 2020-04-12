@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "fantasymod:block/rainbow_lily_of_the_valley"
+    }
+}

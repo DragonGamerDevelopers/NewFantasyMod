@@ -11,6 +11,7 @@ import mod.dragonita.fantasymod.init.ModBlocks;
 import mod.dragonita.fantasymod.init.ModContainerTypes;
 import mod.dragonita.fantasymod.init.ModDimensions;
 import mod.dragonita.fantasymod.init.ModEntityTypes;
+import mod.dragonita.fantasymod.init.ModFeature;
 import mod.dragonita.fantasymod.init.ModItems;
 import mod.dragonita.fantasymod.init.ModTileEntityTypes;
 import net.minecraft.util.ResourceLocation;
@@ -69,6 +70,7 @@ public final class Main
 		ModDimensions.DIMENSION.register(modEventBus);
 		ModBiomes.BIOMES.register(modEventBus);
 		ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
+		ModFeature.FEATURES.register(modEventBus);
 		MinecraftForge.EVENT_BUS.register(this);
 	}	
 	
@@ -78,7 +80,7 @@ public final class Main
 			@Override
 			public void run() {
 				for(Biome biome : ForgeRegistries.BIOMES) {
-					if(biome == ModBiomes.RAINBOW_FOREST.get()) {
+					if(biome == ModBiomes.RAINBOW_FOREST.get() || biome == ModBiomes.RAINBOW_PLAINS.get()) {
 						ConfiguredPlacement<CountRangeConfig> customConfig = Placement.COUNT_RANGE
 								.configure(new CountRangeConfig(20, 5, 5, 25));
 						biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE

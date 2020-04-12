@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "fantasymod:block/rainbow_tulip"
+    }
+}
